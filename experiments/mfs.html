@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MFS</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="stylesheet/style.css">
+
+<script type="text/javascript">
+	function startExp(){
+		$('#main').hide('slow', function(){
+			$('#exp1').show('slow', function(){
+				do_transition("exp",1);
+			})
+		});
+
+	}
+
+function startInc(){
+		$('#main').hide('slow', function(){
+			$('#inc1').show('slow', function(){
+				do_transition("inc",1);
+			})
+		});
+
+}
+// 24 August,19
+function do_transition(type, invokingId){
+		window.accountType = type;
+
+		window.currentShowingId = accountType + invokingId;
+		invokingId++;
+		window.nextShowingId =  accountType + invokingId; 
+
+		$(document).ready(function(){
+			$('#'+currentShowingId).keyup(function(e){
+				window.keyCode = e.keyCode || e.which;
+
+				if(e.keyCode == 13){
+					e.preventDefault();
+					$('#'+currentShowingId).hide('slow', function(){
+						$('#'+nextShowingId).show('slow',function(){
+							$('#'+nextShowingId).find('input').focus();
+							do_transition(type, invokingId);
+						});
+					})
+				}
+			})
+		})
+
+	}
+    
+
+
+function insights(){
+	$('#main').slideUp();
+	$('#table').show();
+	
+
+}
+
+	function dummy(id){ //debug purpose
+		window.val = id;
+		window.alert("id is: exp"+val);
+	}
+	
+</script>
+</head>
+<body>
+<header>
+	<h1> Monthly Financial Statement</h1>
+</header>
+
+<nav>
+	<button onclick="location.reload()"> Home
+	</button>
+</nav>
+
+<center>
+	<div id="main">
+		<input type="button" name="income" value="Income"
+		onclick="startInc()"> 
+		<input type="button" name="exp" value="Expenditure" onclick="startExp()">
+		<input type="button" name="insights" value="Insights"
+		onclick="insights()">
+	</div>
+	<form id="exp_form">
+	<div id="exp1">
+			<p> Who spent? </p>
+			<input type="text" name="who" autofocus="true"
+			placeholder="Payee">
+	</div>
+	<div id="exp2">
+			<p>On what?</p>
+			<input type="text" name="what" 
+			placeholder="What did we buy?">		
+	</div>
+	<div id="exp3">
+			<p> How much?</p>
+			<input type="number" name="amnt" placeholder="Amount in Rupees">
+	</div>
+	<div id="exp4">
+			<p>Expenditure Added!</p>
+			<input type="button" name="Done" value="Done"
+			 onclick="">
+			<input type="button" name="more" value="Add More"
+			onclick="do_transition('exp',1)">
+	</div>
+	</form>
+
+	<form id="income_form">
+	<div id="inc1">
+			<p>Source</p>
+            <input type="button" name="cash" value="Cash">
+            <input type="button" name="online" value="Online">
+        <br/>
+			<input type="text" name="source" autofocus="true"
+			placeholder="Others"> 
+	</div>
+	<div id="inc2">
+		<p>How much?</p>
+		<input type="number" name="iamnt"
+		placeholder="Amount in Rupees">
+	</div>
+
+	<div id="inc3">
+		<p>Income Added!</p>
+		<input type="button" name="iDone" value="Done"
+		onclick="location.reload()">
+	</div>
+		
+	</form>
+
+	<div class="insights">
+		<div id="table">
+			Table data here!<br/>
+            sourced from .xls or db
+		</div>
+		
+	</div>
+</center>
+
+
+<footer> </p>A WebApp Prototype </footer>
+</body>
+
+
+
+</html>
