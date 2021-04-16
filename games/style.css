@@ -1,0 +1,29 @@
+body{
+    background-color:grey;
+}
+article{
+/*    background-color: pink; */
+}
+
+aside{
+    background-color:yellow;
+}
+
+div{
+    display: flex;
+    width: max-content;
+    background-color:pink;
+}
+
+div .box{
+    width: 140px ;
+    height: 90px;
+    background-color: blue;
+    margin: 1px;
+}
+
+.box:hover{
+/*     transform: scale(1.1); */
+    background-color: yellow;
+/*     border: 2px solid yellow; */
+}
