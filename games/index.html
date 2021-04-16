@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Lab</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+<script type="text/javascript">
+	
+	totalScore_red = 0;
+	totalScore_green = 0;
+
+function ttt(){
+	createElements();
+	user = true;
+	win = 0;
+	done = [];
+	redBlocks = [0,0,0,0,0,0,0,0,0];
+	greenBlocks = [0,0,0,0,0,0,0,0,0];
+}
+	
+function userAlter(){
+		if(user == true){
+			user = false;
+		}else if(user == false){
+			user = true;
+		}
+	}
+
+function play(id){
+		currId = parseInt(id);
+		// console.log("currId::"+currId)
+		done.sort();
+		if(done.indexOf(currId) == -1){
+			done.push(currId);
+			userAlter();
+			// console.log("~~~~~~turn ::"+user);
+			if(user){
+				 document.getElementById(currId).style="background-color:red";
+				 redBlocks[currId] = 1;
+				 winCheck(redBlocks, 'red');
+			}else{
+				document.getElementById(currId).style="background-color:green";
+				greenBlocks[currId] = 1;
+				winCheck(greenBlocks, 'green')
+			}
+		}
+		else{
+			alert("NOT allowed");
+		}
+	}
+
+function winCheck(block, color){
+	pos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],
+		[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+	for( var i = 0; i < pos.length; i++){
+	// console.log("for i -"+i);
+		for(var j = 0; j < 3; j++){
+		
+		// console.log("at block"+pos[i][j]+
+			// " value::"+block[pos[i][j]]);
+
+			if(block[pos[i][j]] == 1)
+				win += block[pos[i][j]];
+				// console.log("win::"+win);
+				if(win == 3){
+					break;
+				}
+			}
+			if(win==3){
+				break;
+			}
+	win = 0;
+	}
+
+if(win == 3){
+	if(color == 'red'){
+		message = "Red won"
+		totalScore_red += 1;
+	}
+	else{
+		message = "Green won";
+		totalScore_green += 1;
+	}
+	document.getElementById('result').innerHTML=message
+	+"<p><div>Red:"+totalScore_red
+	+"<br/>Green:"+totalScore_green
+	+"</p></div>";
+	done = [0,1,2,3,4,5,6,7,8];
+	displayResult(color);
+}else if (done.length == 9 && win < 3){
+	alert("Tie")
+}
+
+}
+
+function createElements(){
+	toWrite="";spanId=0;
+	for(var i = 0; i < 3; i++){
+		toWrite += "<div class='row-"+i+"'>"
+		for(var j = i; j < i+3 ; j++){
+			toWrite += "<span class='box' id='"+
+			spanId+++"' onclick='play(this.id)' ></span>";
+		}
+		toWrite +="</div>";
+	}
+	writeOn = document.getElementById('playground');
+	writeOn.innerHTML=toWrite;
+}
+
+function displayResult(color){
+	for(var i = 0; i < 9; i++){
+		document.getElementById(i).style="background-color:"+color+";"
+	}
+}
+
+</script>
+
+</head>
+<body>
+	<nav>
+		Nav bar
+	</nav>
+
+	
+	<section>
+		<article id="playground">
+		</article>
+		<div id="result"></div>
+
+		<button onclick="ttt()">Start-tic-tac-toe!</button>
+	</section>
+	
+	
+	<!-- div class="contact">
+		<a href="https://twitter.com/VirajPrateek?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @VirajPrateek</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+		<a class="twitter-share-button"
+  		href="https://twitter.com/intent/tweet?text="
+  		data-size="large">
+		Tweet</a>
+
+		<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+	</div> -->
+
+<footer>
+	Footer
+</footer>
+</body>
+</html>
